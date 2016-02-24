@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">EventHandlersUsernameTask_Week2Lab1</string>
+    <string name="type_username">Type in your username</string>
+</resources>
