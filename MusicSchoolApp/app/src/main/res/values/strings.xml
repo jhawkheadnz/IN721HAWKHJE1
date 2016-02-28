@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MusicSchoolApp</string>
+    <string name="which_instrument_txt">Which instrument do you want to learn to play?</string>
+
+    <string name="txtAccordian">Accordian</string>
+    <string name="txtBassoon">Bassoon</string>
+    <string name="txtCello">Cello</string>
+
+    <string name="btnShowDetails">Show Details</string>
+
+    <string name="txtLessionStartQuestion">When do you want to start?</string>
+    <string name="responseText">You have enrolled for %1$2s lessons in %2$2s</string>
+
+    <string-array name="monthsStart">
+        <item>Janurary</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+</resources>
