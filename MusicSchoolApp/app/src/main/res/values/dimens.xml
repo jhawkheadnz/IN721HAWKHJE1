@@ -5,4 +5,7 @@
     <dimen name="question_txt_height">40dp</dimen>
     <dimen name="radio_button_height">60dp</dimen>
     <dimen name="response_txt_height">40dp</dimen>
+
+    <dimen name="question_txt_size">20sp</dimen>
+    <dimen name="response_txt_size">20sp</dimen>
 </resources>

@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">MusicSchoolApp</string>
+    <string name="app_name">Music School App 2016</string>
     <string name="which_instrument_txt">Which instrument do you want to learn to play?</string>
 
-    <string name="txtAccordian">Accordian</string>
+    <string name="txtAccordion">Accordion</string>
     <string name="txtBassoon">Bassoon</string>
     <string name="txtCello">Cello</string>
 
