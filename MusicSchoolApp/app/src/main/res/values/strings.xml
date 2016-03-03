@@ -10,6 +10,7 @@
 
     <string name="txtLessionStartQuestion">When do you want to start?</string>
     <string name="responseText">You have enrolled for %1$2s lessons in %2$2s</string>
+    <string name="splashScreenRes">Splash Screen Logo</string>
 
     <string-array name="monthsStart">
         <item>Janurary</item>

@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorText">#0099CC</color>
+    <color name="splashScreenBackground">#362d10</color>
 </resources>

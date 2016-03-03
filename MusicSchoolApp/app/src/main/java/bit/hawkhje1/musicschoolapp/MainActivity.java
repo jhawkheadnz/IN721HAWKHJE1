@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         // get action button
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
         // attach adapter to to spinner
         spinnerMonthStartSelection.setAdapter(startMonthAdapter);
+
+        // close the activity that opened this activity
+        // (so when user presses back button they don't see the splash screen)
+        finish();
     }
 
     class SelectInstrumentButtonHandler implements View.OnClickListener

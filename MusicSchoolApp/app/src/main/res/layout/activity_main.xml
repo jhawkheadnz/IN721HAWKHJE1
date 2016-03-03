@@ -70,7 +70,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinnerMonthStart"
             android:layout_gravity="center_horizontal"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Base.Animation.AppCompat.DropDownUp"
+            android:touchscreenBlocksFocus="true" />
 
         <Button
             android:layout_width="match_parent"
