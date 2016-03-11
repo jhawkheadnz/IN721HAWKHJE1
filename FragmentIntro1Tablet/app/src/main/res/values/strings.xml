@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Fragments Intro 2016</string>
+
+    <string name="image_fragment_title">Fragment With Image</string>
+    <string name="listview_fragment_title">Fragment With ListView</string>
+
+    <string name="btnShowImageFragment">Show Image</string>
+    <string name="btnShowListViewFragment">Show ListView</string>
+
+    <string-array name="placesList">
+        <item>Amsterdam</item>
+        <item>Berlin</item>
+        <item>Chiang Mai</item>
+        <item>Dublin</item>
+        <item>Edmonton</item>
+        <item>Frezno</item>
+        <item>Gore</item>
+    </string-array>
+</resources>
