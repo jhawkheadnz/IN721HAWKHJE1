@@ -6,19 +6,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    // color request code
     public static int COLOR_REQUEST_CODE = 0;
-    public static String COLOR_REQUEST_ID = "";
+
+    // color request id
+    public static String COLOR_REQUEST_ID = "RequestedColor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
+        // btnChangeTextColor Setup
+        Button btnChangeTextColor = (Button)findViewById(R.id.btnChangeTextColor);
+        BtnChangeTextColorHandler btnChangeTextColorHandler = new BtnChangeTextColorHandler();
+        btnChangeTextColor.setOnClickListener(btnChangeTextColorHandler);
     }
 
     @Override
@@ -42,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class BtnChangeTextColor implements View.OnClickListener
+    // Change Text Color Button Click Handler
+    class BtnChangeTextColorHandler implements View.OnClickListener
     {
         @Override
         public void onClick(View v) {
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             // create intent for loading settings activity
             Intent settingsActivityIntent = new Intent(MainActivity.this, SettingsActivity.class);
 
+            // start activity requesting result
             startActivityForResult(settingsActivityIntent, COLOR_REQUEST_CODE);
 
         }
