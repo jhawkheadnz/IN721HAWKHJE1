@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DataPassingToActivites</string>
+    <string name="txtUsernameTitle">Your username:</string>
+    <string name="txtEnterUsername">Enter Your Username:</string>
+    <string name="txtUsernameEmpty">No username chosen yet...</string>
+
+    <string name="btnLaunchSettings">Go To Settings</string>
+    <string name="btnReturnToMain">Return To Main</string>
+</resources>
