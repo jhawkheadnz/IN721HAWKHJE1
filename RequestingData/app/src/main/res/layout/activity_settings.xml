@@ -13,8 +13,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView"
+        android:text="@string/settings_title"
+        android:id="@+id/txtSettingsTitle"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/settings_title_text_size" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_content"
+        android:id="@+id/txtSettingsContent"
+        android:layout_below="@+id/txtSettingsTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp"
+        android:textSize="@dimen/settings_content_text_size"
+        android:textColor="@color/settings_content_text_color" />
 </RelativeLayout>
