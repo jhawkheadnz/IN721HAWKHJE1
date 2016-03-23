@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">LanguageTrainer</string>
+
+    <string name="app_name">Language Trainer</string>
+
+    <!-- Main Activity Strings -->
+    <string name="application_title">German Language Learner \n(Gender Words)</string>
+
+    <!-- Main Activity Button String -->
+    <string name="btnPracticeWords">Practice Gender Words Now</string>
+
+    <!-- Practice Activity Strings -->
+    <string name="txtAnswerCorrect">Correct</string>
+    <string name="txtAnswerIncorrect">Incorrect</string>
+
+    <!-- Practice Activity Button Strings -->
+    <string name="btnDer">Der</string>
+    <string name="btnDie">Die</string>
+    <string name="btnDas">Das</string>
+
 </resources>
