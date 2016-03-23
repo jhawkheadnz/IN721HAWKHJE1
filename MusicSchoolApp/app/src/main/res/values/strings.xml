@@ -26,4 +26,11 @@
         <item>November</item>
         <item>December</item>
     </string-array>
+
+    <string name="enroll_question_title">Are you sure?</string>
+    <string name="enroll_question">Are you sure you want to enroll for %1$s lessons, starting in %2$s?</string>
+
+    <string name="btnYes">YES</string>
+    <string name="btnNo">NO</string>
+
 </resources>

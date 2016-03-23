@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="bit.hawkhje1.musicschoolapp.MainActivity"
+    android:padding="0dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/question_txt_height"
+            android:text="@string/which_instrument_txt"
+            android:id="@+id/tbxQuestionText"
+            android:gravity="center|center_vertical"
+            android:textSize="@dimen/question_txt_size"
+            android:layout_weight="0.29" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:id="@+id/rbtnGroupInstruments">
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/radio_button_height"
+                android:text="@string/txtAccordion"
+                android:id="@+id/rbtnAccordian"
+                android:checked="true" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/radio_button_height"
+                android:text="@string/txtBassoon"
+                android:id="@+id/rbtnBassoon" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/radio_button_height"
+                android:text="@string/txtCello"
+                android:id="@+id/rbtnCello" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txtLessionStartQuestion"
+            android:id="@+id/txtLessionStartQuestion"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center|center_vertical"
+            android:height="@dimen/question_txt_height"
+            android:textSize="@dimen/question_txt_size" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerMonthStart"
+            android:layout_gravity="center_horizontal"
+            android:theme="@style/Base.Animation.AppCompat.DropDownUp"
+            android:touchscreenBlocksFocus="true" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:text="@string/btnShowDetails"
+            android:id="@+id/btnShowInstrument" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/response_txt_height"
+            android:text="@string/responseText"
+            android:id="@+id/txtResponse"
+            android:gravity="center|center_vertical"
+            android:visibility="invisible"
+            android:textSize="@dimen/response_txt_size" />
+
+    </LinearLayout>
+
+</RelativeLayout>
