@@ -7,12 +7,20 @@
         android:layout_width="100sp"
         android:layout_height="80sp"
         android:id="@+id/result_imgWordImage"
-        android:background="@android:color/white" />
+        android:background="@android:color/white"
+        android:layout_marginLeft="@dimen/reviewItemVerticalImageMargin"
+        android:layout_marginTop="@dimen/reviewItemHorizontalImageMargin"
+        android:layout_marginRight="@dimen/reviewItemHorizontalImageMargin"
+        android:layout_marginBottom="@dimen/reviewItemVerticalImageMargin" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/reviewItemTextLeftMargin"
+        android:layout_marginTop="@dimen/reviewItemTextTopMargin"
+        android:layout_marginRight="@dimen/reviewItemTextRightMargin"
+        android:layout_marginBottom="@dimen/reviewItemTextBottomMargin">
 
         <TextView
             android:layout_width="wrap_content"
