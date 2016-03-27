@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/imgWordImage"
             android:adjustViewBounds="true"
-            android:src="@drawable/die_strasse" />
+            android:src="@drawable/die_strasse"
+            android:maxHeight="300sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -30,7 +31,8 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical|center_horizontal"
             android:visibility="visible"
-            android:textSize="@dimen/result_text_size" />
+            android:textSize="@dimen/result_text_size"
+            android:height="@dimen/result_textview_height" />
 
         <LinearLayout
             android:orientation="horizontal"

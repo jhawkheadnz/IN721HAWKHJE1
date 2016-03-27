@@ -9,8 +9,8 @@
 
     <!-- Practice Activity Strings -->
     <string name="practiceActivityLabel">Practice</string>
-    <string name="txtAnswerCorrect">Correct</string>
-    <string name="txtAnswerIncorrect">Incorrect</string>
+    <string name="txtAnswerCorrect">CORRECT</string>
+    <string name="txtAnswerIncorrect">INCORRECT</string>
 
     <!-- Practice Activity Button Strings -->
     <string name="btnDer">Der</string>
@@ -29,4 +29,5 @@
     <string name="review_txtTitleNoun">Noun</string>
     <string name="review_txtTitleEnglish">English</string>
     <string name="review_txtTitleResult">Result</string>
+    <string name="review_btnReturnHome">&lt; Return to home screen</string>
 </resources>

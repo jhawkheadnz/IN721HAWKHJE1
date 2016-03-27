@@ -93,8 +93,15 @@ public class AnswerWord implements Parcelable {
         StringBuilder sb = new StringBuilder();
 
         sb.append(word.toString());
-        sb.append("   Answer: ");
+        sb.append("Answer: ");
         sb.append(article);
+        sb.append(" (");
+
+        // get the result
+        boolean result = word.containsArticle(article);
+
+        sb.append(result);
+        sb.append(")");
         sb.append("\r\n");
         return sb.toString();
 

@@ -159,23 +159,23 @@ public class Word implements Parcelable {
 
         sb.append("Gender: ");
         sb.append(this.gender);
-        sb.append(", ");
+        sb.append("\r\n");
 
         sb.append("Article: ");
         sb.append(this.article);
-        sb.append(", ");
+        sb.append("\r\n");
 
         sb.append("Noun: ");
         sb.append(this.noun);
-        sb.append(", ");
+        sb.append("\r\n");
 
         sb.append("English: ");
         sb.append(this.english_translation);
-        sb.append(", ");
+        sb.append("\r\n");
 
         sb.append("ImageID: ");
         sb.append(this.image);
-        sb.append("\r\n------------------\r\n");
+        sb.append("\r\n");
 
         return sb.toString();
 
