@@ -5,4 +5,8 @@
 
     <!-- Practice Activity Dimensions -->
     <dimen name="result_textbox_height">50sp</dimen>
+    <dimen name="result_text_size">20sp</dimen>
+    <dimen name="titleHeight">70sp</dimen>
+    <dimen name="reviewTextSize">30sp</dimen>
+    <dimen name="review_titleTextSize">35sp</dimen>
 </resources>

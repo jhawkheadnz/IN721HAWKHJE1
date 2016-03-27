@@ -12,4 +12,9 @@
     <color name="btnNeutralColor">#777777</color>
     <color name="btnIncorrectColor">#FF0000</color>
     <color name="btnCorrectColor">#00FF00</color>
+    <color name="btnSelectedColor">#2c5a84</color>
+    <color name="btnSelectedTextColor">#ffffff</color>
+    <color name="btnTextColor">#ffffff</color>
+    <color name="btnDeselectedColor">#23242b</color>
+    <color name="review_titleBackgroundColor">#333333</color>
 </resources>

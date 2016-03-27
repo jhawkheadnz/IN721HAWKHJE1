@@ -1,5 +1,4 @@
 <resources>
-
     <string name="app_name">Language Trainer</string>
 
     <!-- Main Activity Strings -->
@@ -9,12 +8,25 @@
     <string name="btnPracticeWords">Practice Gender Words Now</string>
 
     <!-- Practice Activity Strings -->
+    <string name="practiceActivityLabel">Practice</string>
     <string name="txtAnswerCorrect">Correct</string>
     <string name="txtAnswerIncorrect">Incorrect</string>
 
     <!-- Practice Activity Button Strings -->
     <string name="btnDer">Der</string>
     <string name="btnDie">Die</string>
-    <string name="btnDas">Das</string>
+    <string name="btnDas">Das </string>
+    <string name="btnConfirm">Confirm</string>
+    <string name="btnNextQuestion">Next Question >></string>
+    <string name="txtQuestion">Which article does this image match?</string>
+    <string name="btnNextCompletedText">Finish &amp; Review</string>
 
+    <!-- Review Activity Strings -->
+    <string name="reviewActivityLabel">Review</string>
+    <string name="review_txtYourResults">Your Results</string>
+    <string name="review_txtTitleGender">Gender</string>
+    <string name="review_txtTitleArticle">Article</string>
+    <string name="review_txtTitleNoun">Noun</string>
+    <string name="review_txtTitleEnglish">English</string>
+    <string name="review_txtTitleResult">Result</string>
 </resources>
