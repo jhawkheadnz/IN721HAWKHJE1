@@ -7,42 +7,58 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
 import bit.hawkhje1.languagetrainer.Classes.AnswerWord;
+import bit.hawkhje1.languagetrainer.Classes.Word;
+import bit.hawkhje1.languagetrainer.Enums.Article;
 
 public class ReviewActivity extends AppCompatActivity {
 
-    List<AnswerWord> userAnswers = null;
+    private List<AnswerWord> userAnswers = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
+        // get intent
         Intent intent = getIntent();
 
+        // get the list view
+        ListView resutlsList = (ListView)findViewById(R.id.lvResults);
+        TextView txtResultScore = (TextView)findViewById(R.id.txtResultScore);
+
+        // get the answers from intent
         userAnswers = intent.getParcelableArrayListExtra(PracticeActivity.RESULT_LIST_ID);
 
-        ArrayAdapter<AnswerWord> answerWordArrayAdapter = new ArrayAdapter<AnswerWord>(ReviewActivity.this,android.R.layout.simple_list_item_1, userAnswers);
+        int questionsCount = userAnswers.size();
 
-        ListView resutlsList = (ListView)findViewById(R.id.lvResults);
-        resutlsList.setAdapter(answerWordArrayAdapter);
+        int questionsCorrect = 0;
+        float percentage;
 
-        /*if(userAnswers != null) {
-            Toast.makeText(ReviewActivity.this, "Test is not null", Toast.LENGTH_SHORT).show();
+        for(AnswerWord answerWord : userAnswers){
 
-            try{
-                Log.d("JH_TEST", userAnswers.get(1).toString());
-            }catch(Exception ex) {
-                ex.printStackTrace();
-                Log.d("JH_TEST", ex.getMessage());
+            Word word = answerWord.getWord();
+            Article article = answerWord.getArticleAnswer();
+
+            if(word.containsArticle(article)) {
+                questionsCorrect++;
             }
 
-        } else
-            Toast.makeText(ReviewActivity.this, "Test is still null", Toast.LENGTH_SHORT).show();*/
+        }
+
+        percentage =(((float)questionsCorrect / (float)questionsCount) * 100);
+
+        txtResultScore.setText(String.format("%s/%s - %.2f%%", Integer.toString(questionsCorrect), Integer.toString(questionsCount), percentage));
+
+        // create an array adapter for List view to show results to user
+        ArrayAdapter<AnswerWord> answerWordArrayAdapter = new ArrayAdapter<>(ReviewActivity.this,android.R.layout.simple_list_item_1, userAnswers);
+
+        // set the list view's adapter
+        resutlsList.setAdapter(answerWordArrayAdapter);
 
         // home button
         Button btnHome = (Button)findViewById(R.id.btnHome);
@@ -51,6 +67,9 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Send the user back to the home screen
+     */
     private class BtnHomeHandler implements View.OnClickListener{
 
         @Override

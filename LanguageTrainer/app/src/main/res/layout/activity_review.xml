@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="11/11 - (100%)"
-            android:id="@+id/txtResult"
+            android:id="@+id/txtResultScore"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical|center_horizontal"
             android:height="60sp"
