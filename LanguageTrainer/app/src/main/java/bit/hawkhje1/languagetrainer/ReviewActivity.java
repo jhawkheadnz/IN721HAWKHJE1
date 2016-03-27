@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import bit.hawkhje1.languagetrainer.Classes.AnswerWord;
+import bit.hawkhje1.languagetrainer.Classes.ResultsAdapter;
 import bit.hawkhje1.languagetrainer.Classes.Word;
 import bit.hawkhje1.languagetrainer.Enums.Article;
 
@@ -55,10 +56,11 @@ public class ReviewActivity extends AppCompatActivity {
         txtResultScore.setText(String.format("%s/%s - %.2f%%", Integer.toString(questionsCorrect), Integer.toString(questionsCount), percentage));
 
         // create an array adapter for List view to show results to user
-        ArrayAdapter<AnswerWord> answerWordArrayAdapter = new ArrayAdapter<>(ReviewActivity.this,android.R.layout.simple_list_item_1, userAnswers);
+        //ArrayAdapter<AnswerWord> answerWordArrayAdapter = new ArrayAdapter<>(ReviewActivity.this,android.R.layout.simple_list_item_1, userAnswers);
+        ResultsAdapter resultsAdapter = new ResultsAdapter(ReviewActivity.this, android.R.layout.simple_list_item_1, userAnswers);
 
         // set the list view's adapter
-        resutlsList.setAdapter(answerWordArrayAdapter);
+        resutlsList.setAdapter(resultsAdapter);
 
         // home button
         Button btnHome = (Button)findViewById(R.id.btnHome);

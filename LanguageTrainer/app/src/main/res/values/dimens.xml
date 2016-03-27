@@ -9,4 +9,12 @@
     <dimen name="titleHeight">70sp</dimen>
     <dimen name="reviewTextSize">30sp</dimen>
     <dimen name="review_titleTextSize">35sp</dimen>
+
+    <!-- Review Item Dimensions -->
+    <dimen name="reviewItemHorizontalImageMargin">5sp</dimen>
+    <dimen name="reviewItemVerticalImageMargin">5sp</dimen>
+    <dimen name="reviewItemTextLeftMargin">5sp</dimen>
+    <dimen name="reviewItemTextTopMargin">5sp</dimen>
+    <dimen name="reviewItemTextBottomMargin">5sp</dimen>
+    <dimen name="reviewItemTextRightMargin">5sp</dimen>
 </resources>

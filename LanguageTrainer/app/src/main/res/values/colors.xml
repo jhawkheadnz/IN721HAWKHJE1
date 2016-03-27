@@ -17,4 +17,8 @@
     <color name="btnTextColor">#ffffff</color>
     <color name="btnDeselectedColor">#23242b</color>
     <color name="review_titleBackgroundColor">#333333</color>
+
+    <!-- Review Activity Colors -->
+    <color name="reviewBGItemColorIncorrect">#e2a3a3</color>
+    <color name="reviewBGItemColorCorrect">#b4e2b4</color>
 </resources>

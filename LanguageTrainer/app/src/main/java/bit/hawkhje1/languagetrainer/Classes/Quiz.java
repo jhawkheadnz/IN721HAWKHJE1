@@ -1,5 +1,7 @@
 package bit.hawkhje1.languagetrainer.Classes;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +10,8 @@ import java.util.Stack;
 import bit.hawkhje1.languagetrainer.Enums.Article;
 
 public class Quiz {
+
+    public static final String QUIZ_LOG = "QuizLog";
 
     private List<Word> words;
     private Stack<Word> questions = new Stack<>();
@@ -103,6 +107,7 @@ public class Quiz {
     public void addResult(Article article, Word word){
         AnswerWord answer = new AnswerWord(word, article);
         this.userAnswers.add(answer);
+        Log.d(QUIZ_LOG, "Answer: " + answer.toString() + " was added");
     }
 
     public List<AnswerWord> getResults(){ return this.userAnswers; }
