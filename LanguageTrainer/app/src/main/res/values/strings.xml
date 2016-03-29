@@ -18,7 +18,7 @@
     <string name="btnDas">Das </string>
     <string name="btnConfirm">Confirm</string>
     <string name="btnNextQuestion">Next Question >></string>
-    <string name="txtQuestion">Which article does this image match?</string>
+    <string name="txtQuestion">Which article do these images match?</string>
     <string name="btnNextCompletedText">Finish &amp; Review</string>
 
     <!-- Review Activity Strings -->
@@ -30,4 +30,9 @@
     <string name="review_txtTitleEnglish">English</string>
     <string name="review_txtTitleResult">Result</string>
     <string name="review_btnReturnHome">&lt; Return to home screen</string>
+
+    <!-- Dialog Stuff -->
+    <string name="txtDialogQuestion">Are you sure you want to exit quiz?</string>
+    <string name="btnDialogYes">Yes</string>
+    <string name="btnDialogNo">No</string>
 </resources>
