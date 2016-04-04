@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,13 +42,13 @@ public class ActivitiesActivity extends AppCompatActivity {
         // get resources
         Resources res = getResources();
 
-        // get drawables
-        Drawable larnchCastle = res.getDrawable(R.drawable.larnach_castle);
-        Drawable moanaPool = res.getDrawable(R.drawable.moana_pool);
-        Drawable monarchCruise = res.getDrawable(R.drawable.monarch);
-        Drawable octagon = res.getDrawable(R.drawable.octagon);
-        Drawable olverston = res.getDrawable(R.drawable.olveston);
-        Drawable peninsula = res.getDrawable(R.drawable.peninsula);
+        // used ContextCompat since current physical device only supports API17
+        Drawable larnchCastle = ContextCompat.getDrawable(this, R.drawable.larnach_castle);
+        Drawable moanaPool = ContextCompat.getDrawable(this, R.drawable.moana_pool);
+        Drawable monarchCruise = ContextCompat.getDrawable(this, R.drawable.monarch_small);
+        Drawable octagon = ContextCompat.getDrawable(this, R.drawable.octagon_small);
+        Drawable olverston = ContextCompat.getDrawable(this, R.drawable.olveston_small);
+        Drawable peninsula = ContextCompat.getDrawable(this, R.drawable.peninsula);
 
         // populate activities list
         activities.add(new ActivityItem(larnchCastle, "Larnch Castle"));
@@ -82,8 +83,6 @@ public class ActivitiesActivity extends AppCompatActivity {
             this.image = image;
             this.name = name;
         }
-
-
     }
 
     class ActivitiesAdapter extends ArrayAdapter<ActivityItem>{
@@ -92,14 +91,14 @@ public class ActivitiesActivity extends AppCompatActivity {
             super(context, resource, objects);
         }
 
-        @Override
+        @Override // Ctrl+U to see super method
         public View getView(int position, View convertView, ViewGroup parent) {
 
             // create inflater
             LayoutInflater inflater = LayoutInflater.from(ActivitiesActivity.this);
 
             // inflate view
-            View customView = inflater.inflate(R.layout.activities_listitem, parent);
+            View customView = inflater.inflate(R.layout.activities_listitem, null);
 
             // get the layout controls from the inflated layout
             ImageView ivItemImage = (ImageView)customView.findViewById(R.id.ivItemImage);
