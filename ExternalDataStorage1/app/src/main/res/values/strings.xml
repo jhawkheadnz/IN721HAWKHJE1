@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ExternalDataStorage1</string>
+
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="french">French</string>
+    <string name="german">German</string>
+
+    <string name="language_not_set">Language has not been set, please select a language</string>
+    <string name="english_hello">Hello World</string>
+    <string name="french_hello">Bonjour Le Monde</string>
+    <string name="spanish_hello">Hola Mundo</string>
+    <string name="german_hello">Hallo Welt</string>
+
+    <string name="btnChangeLanguageText">Set Language</string>
+
+    <string name="color_red">Red</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_orange">Orange</string>
+
+    <string name="txtSelectColor">Select a Color:</string>
+    <string name="btnChangeColor">Change Color</string>
+</resources>
