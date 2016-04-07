@@ -2,4 +2,5 @@
     <string name="app_name">ExternalDataSQLite2</string>
     <string name="txtCitiesTitle">Cities</string>
     <string name="btnPopulateTable">Populate Table</string>
+    <string name="btnUpdateCountries">Update Countries</string>
 </resources>

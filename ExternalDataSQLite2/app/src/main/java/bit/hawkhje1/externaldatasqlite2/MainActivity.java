@@ -8,14 +8,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Button;
+import android.widget.Spinner;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Spinner spCountries;
+    private ListView lvCities;
     private CitiesDBManager citiesDBManager;
     private String DB_NAME = "dbPlaces";
 
@@ -24,12 +26,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // create database
-        SQLiteDatabase dbCountries = openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
+        lvCities = (ListView)findViewById(R.id.lvCities);
 
-        // create tblCities if it doesn't exist
-        citiesDBManager = new CitiesDBManager(dbCountries);
-        citiesDBManager.createTblCities();
+        InitDatabase();
+        InitViewObjects();
+
+    }
+
+    private void InitViewObjects(){
 
         Button btnPopulateTable = (Button)findViewById(R.id.btnPopulateTable);
         BtnPopulateTableHandler btnPopulateTableHandler = new BtnPopulateTableHandler();
@@ -37,10 +41,28 @@ public class MainActivity extends AppCompatActivity {
 
         // get a list of items from the database
         List<City> citiesFromTblCities = citiesDBManager.GetCities();
-
         ArrayAdapter<City> citiesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, citiesFromTblCities);
-        ListView lvCities = (ListView)findViewById(R.id.lvCities);
         lvCities.setAdapter(citiesAdapter);
+
+        // spCountries
+        spCountries = (Spinner)findViewById(R.id.spCountries);
+        List<String> countries = citiesDBManager.getCountries();
+        ArrayAdapter<String> countriesArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, countries);
+        spCountries.setAdapter(countriesArrayAdapter);
+
+        Button btnUpdateCountry = (Button)findViewById(R.id.btnUpdateCountries);
+        BtnUpdateCountryHandler btnUpdateCountryHandler = new BtnUpdateCountryHandler();
+        btnUpdateCountry.setOnClickListener(btnUpdateCountryHandler);
+
+    }
+
+    private void InitDatabase(){
+        // create database
+        SQLiteDatabase dbCountries = openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
+
+        // create tblCities if it doesn't exist
+        citiesDBManager = new CitiesDBManager(dbCountries);
+        citiesDBManager.createTblCities();
     }
 
     private List<City> getCitiesList(){
@@ -124,11 +146,74 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        public List<City> getCitiesFromSQL(String sql){
+            Cursor recordSet = this.sqLiteDatabase.rawQuery(sql, null);
+            int recordCount = recordSet.getCount();
+
+            City[] citiesArray = new City[recordCount];
+
+            int idIndex = recordSet.getColumnIndex("cityID");
+            int cityNameIndex = recordSet.getColumnIndex("cityName");
+            int countryNameIndex = recordSet.getColumnIndex("countryName");
+
+            // move to the first record
+            recordSet.moveToFirst();
+
+            for(int i = 0; i < recordCount; i++){
+
+                int id = recordSet.getInt(idIndex);
+                String cityName = recordSet.getString(cityNameIndex);
+                String countryName = recordSet.getString(countryNameIndex);
+
+                citiesArray[i] = new City(id, cityName, countryName);
+
+                // move to the next item in the recordset
+                recordSet.moveToNext();
+            }
+
+            return Arrays.asList(citiesArray);
+        }
+
+        public List<City> getCitiesFromCountry(String country){
+
+            String sql = String.format("SELECT cityID, cityName, countryName FROM tblCities WHERE countryName = %s", country);
+            return getCitiesFromSQL(sql);
+
+        }
+
+        public List<String> getCountries(){
+
+            String sql = "SELECT DISTINCT countryName FROM tblCities";
+
+            Cursor recordSet = this.sqLiteDatabase.rawQuery(sql, null);
+            int recordCount = recordSet.getCount();
+
+            String[] countries = new String[recordCount];
+
+            int countryNameIndex = recordSet.getColumnIndex("countryName");
+
+            // move to the first record
+            recordSet.moveToFirst();
+
+            for(int i = 0; i < recordCount; i++){
+
+                String countryName = recordSet.getString(countryNameIndex);
+                countries[i] = countryName;
+
+                // move to the next item in the recordset
+                recordSet.moveToNext();
+            }
+
+            return Arrays.asList(countries);
+        }
+
         public List<City> GetCities() {
 
             // display in list view
             String selectAll = "SELECT cityID, cityName, countryName FROM tblCities";
-            Cursor recordSet = this.sqLiteDatabase.rawQuery(selectAll, null);
+
+            return getCitiesFromSQL(selectAll);
+            /*Cursor recordSet = this.sqLiteDatabase.rawQuery(selectAll, null);
 
             int recordCount = recordSet.getCount();
 
@@ -157,11 +242,11 @@ public class MainActivity extends AppCompatActivity {
             recordSet.close();
 
             // return list of items
-            return Arrays.asList(citiesStringArray);
+            return Arrays.asList(citiesStringArray);*/
         }
     }
 
-    private class BtnPopulateTableHandler implements ListView.OnClickListener {
+    private class BtnPopulateTableHandler implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             Button btnPopulateTable = (Button)findViewById(R.id.btnPopulateTable);
@@ -171,6 +256,19 @@ public class MainActivity extends AppCompatActivity {
             citiesDBManager.addCitiesToTblCities(cities);
 
             btnPopulateTable.setVisibility(View.INVISIBLE);
+        }
+    }
+    private class BtnUpdateCountryHandler implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
+            String selectedCountry = spCountries.getSelectedItem().toString();
+
+            List<City> cities = citiesDBManager.getCitiesFromCountry(selectedCountry);
+            ArrayAdapter<City> filteredCitiesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cities);
+            lvCities.setAdapter(filteredCitiesAdapter);
+
         }
     }
 }

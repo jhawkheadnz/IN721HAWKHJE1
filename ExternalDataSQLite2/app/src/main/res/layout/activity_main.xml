@@ -22,11 +22,16 @@
             android:gravity="center_horizontal"
             android:textSize="@dimen/txtTitleSize" />
 
-        <Button
-            android:layout_width="match_parent"
+        <Spinner
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btnPopulateTable"
-            android:id="@+id/btnPopulateTable" />
+            android:id="@+id/spCountries" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnUpdateCountries"
+            android:id="@+id/btnUpdateCountries" />
 
         <ListView
             android:layout_width="wrap_content"
@@ -35,6 +40,12 @@
             android:layout_below="@+id/textView"
             android:layout_toRightOf="@+id/textView"
             android:layout_toEndOf="@+id/textView" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnPopulateTable"
+            android:id="@+id/btnPopulateTable" />
 
     </LinearLayout>
 </RelativeLayout>
