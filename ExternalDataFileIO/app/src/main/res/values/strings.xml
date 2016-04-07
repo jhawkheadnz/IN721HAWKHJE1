@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ExternalDataFileIO</string>
+    <string name="txtCitiesTitle">Cities</string>
+</resources>
