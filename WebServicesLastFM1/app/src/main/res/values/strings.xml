@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">WebServicesLastFM1</string>
+    <string name="app_name">Last.fm Top 20</string>
+    <string name="txtTitle">Top 20 Artists</string>
 </resources>

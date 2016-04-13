@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tblLayoutHight"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="{{artist_name}}"
+                android:id="@+id/tvArtistName"
+                android:textSize="@dimen/tblTextSize"
+                android:width="200sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="{{listeners}}"
+                android:id="@+id/tvArtistListener"
+                android:textSize="@dimen/tblTextSize"
+                android:textAlignment="textEnd" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
