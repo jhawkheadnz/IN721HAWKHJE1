@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WebServicesBitmap</string>
+    <string name="btn_show_top_artist_image">Show Top Artists</string>
+</resources>
