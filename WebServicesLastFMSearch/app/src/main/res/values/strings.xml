@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WebServicesLastFMSearch</string>
+    <string name="searchHeader">Search Similar Artists</string>
+    <string name="searchSimilarTxt">Search Similar Artists</string>
+</resources>
