@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // teleportation button
     public class BtnClickTeleportHandler implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // get the location coordinates
     public Coordinates getLocation(){
 
         Random rand = new Random();
@@ -71,7 +73,5 @@ public class MainActivity extends AppCompatActivity {
 
         return new Coordinates(longitude, latitude);
     }
-
-    
 
 }
