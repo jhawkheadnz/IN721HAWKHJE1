@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">LocationTeleporterRand</string>
+    <string name="longitude_title">Longitude:</string>
+    <string name="default_longitude_value"><![CDATA[<location not set>]]></string>
+    <string name="latitude_title">Latitude:</string>
+    <string name="default_latitude_value"><![CDATA[<location not set>]]></string>
+    <string name="default_location"><![CDATA[<< location not set >>]]></string>
+    <string name="btn_generate_location">Generate Location</string>
 </resources>
