@@ -1,13 +1,21 @@
 package bit.hawkhje1.locationteleporterrand;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
 
             tvLongitude.setText(longitudeText);
             tvLatitude.setText(latitudeText);
+
+            GeoPluginAsyncTask geoPlugin = new GeoPluginAsyncTask();
+            geoPlugin.execute();
+
+            try {
+                Coordinates randCoordinates = geoPlugin.get();
+                tvLocation.setText(randCoordinates.toString());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                tvLocation.setText(e.getMessage());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                tvLocation.setText(e.getMessage());
+            }
         }
 
     }
@@ -72,6 +94,69 @@ public class MainActivity extends AppCompatActivity {
         double latitude = rand.nextDouble() * (MAX_LATITUDE - MIN_LATITUDE) + MIN_LATITUDE;
 
         return new Coordinates(longitude, latitude);
+    }
+
+    // async task for GeoPlugin
+    public class GeoPluginAsyncTask extends AsyncTask<String, Integer, Coordinates>
+    {
+        private static final String GEOPLUGIN_ASYNCTASK = "GEOPLUGIN_ASYNC";
+
+        @Override
+        protected Coordinates doInBackground(String... params) {
+
+            String geoPluginContents;
+
+            // generate random coordinates
+            Coordinates randCoordinates = getLocation();
+
+            try {
+
+                // output geoplugin async task to log
+                Log.d(GEOPLUGIN_ASYNCTASK, "Checking Coordinates " + randCoordinates.toString());
+
+                // format the URL
+                String formattedURL = String.format(Globals.GEOPLUGIN_URL, randCoordinates.getLatitude(), randCoordinates.getLongitude());
+
+                // create URL
+                URL geoPluginURL = new URL(formattedURL);
+
+                // create an HTTP URL Connection
+                HttpURLConnection httpURLConnection = (HttpURLConnection)geoPluginURL.openConnection();
+
+                // create an input stream
+                InputStream inputStream = httpURLConnection.getInputStream();
+
+                // create input stream reader
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+                // create buffered reader
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                // create a string builder to get content from geoplugin
+                StringBuilder content = new StringBuilder();
+
+                // create empty string
+                String currentLine;
+
+                // loop through each line that's returned
+                while((currentLine = bufferedReader.readLine()) != null){
+                    content.append(currentLine);
+                }
+
+
+
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
+
+            return randCoordinates;
+        }
+
+        @Override
+        protected void onPostExecute(Coordinates coordinates) {
+
+            super.onPostExecute(coordinates);
+        }
     }
 
 }
