@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
 
                 // if an image has not been found for the location, display image_not_found image
-                Drawable image = getResources().getDrawable(R.drawable.img_not_found);
+                Drawable image = getResources().getDrawable(R.drawable.image_unavailable);
                 imgLocation.setImageDrawable(image);
 
                 // set the "Image Not Found" textview to visible
