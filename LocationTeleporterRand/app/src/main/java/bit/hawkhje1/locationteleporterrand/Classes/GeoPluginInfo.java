@@ -19,6 +19,9 @@ import org.json.JSONObject;
  */
 public class GeoPluginInfo {
 
+    // for logcat
+    private static final String GEOPLUGIN_INFO = "GEOPLUGIN_INFO";
+
     // geoplugin properties
     private String place;
     private String countryCode;

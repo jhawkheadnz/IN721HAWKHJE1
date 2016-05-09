@@ -64,9 +64,9 @@ public class Globals {
         public static String FLICKR_URL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%s&lat=%s&lon=%s&radius=%s&format=json&nojsoncallback=1&per_page=%s&page=%s";
 
         /**
-         * My Default FlickrAPI Key
+         * Default FlickrAPI Key
          */
-        public static String FLICKR_APIKEY = "a0d574112002eab146ea40f7ebd3c6b3";
+        public static String FLICKR_APIKEY = "eda41a123d459be0f85276d37290651e";
 
         /**
          * Flickr Search Radius

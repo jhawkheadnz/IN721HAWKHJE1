@@ -12,6 +12,9 @@ import bit.hawkhje1.locationteleporterrand.Interfaces.TeleportationListener;
  */
 public class TeleportationManager {
 
+    // for log cat
+    private static final String TELEPORTATION_MANAGER_INFO = "TELEPORTATION_MANAGER_INFO";
+
     // reference to context
     private Context context;
 

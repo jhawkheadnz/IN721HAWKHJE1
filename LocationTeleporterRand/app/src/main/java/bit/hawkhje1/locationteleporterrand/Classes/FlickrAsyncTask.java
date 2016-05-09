@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,9 @@ import bit.hawkhje1.locationteleporterrand.Interfaces.AsyncCallback;
  * Async Task for Loading Flickr Content
  */
 public class FlickrAsyncTask extends AsyncTask<String, Void, List<FlickrInfo>> {
+
+    // for logcat
+    private static final String FLICKR_ASYNCTASK_INFO = "FLICKR_ASYNCTASK_INFO";
 
     // Context to pass to progress dialog
     private Context context;
@@ -105,6 +109,9 @@ public class FlickrAsyncTask extends AsyncTask<String, Void, List<FlickrInfo>> {
         // create flickr url
         String flickrURL = String.format(Globals.Flickr.FLICKR_URL, Globals.Flickr.FLICKR_APIKEY, latitude, longitude, radius, perPage, page);
 
+        // display flickr url to log
+        Log.d(FLICKR_ASYNCTASK_INFO, "Loading FlickrInfo From: " + flickrURL);
+
         // create a list to store all the flickr info we want to grab
         List<FlickrInfo> flickrInfoList = new ArrayList<>();
         String content = "";
@@ -137,6 +144,9 @@ public class FlickrAsyncTask extends AsyncTask<String, Void, List<FlickrInfo>> {
 
             // assign received data to content string
             content = flickrContent.toString();
+
+            // display content received from Flickr
+            Log.d(FLICKR_ASYNCTASK_INFO, "Content received from Flickr: " + content);
 
             // close input stream
             inputStream.close();

@@ -19,12 +19,16 @@ import bit.hawkhje1.locationteleporterrand.Managers.TeleportationManager;
 
 public class MainActivity extends AppCompatActivity {
 
+    // for logcat
+    private static final String MAIN_ACTIVITY_INFO = "MAIN_ACTIVITY_INFO";
+
     private TextView tvLatitude;
     private TextView tvLongitude;
     private TextView tvLocation;
     private ImageView imgLocation;
     private TextView tvImageNotFound;
 
+    // create teleportation manager
     private TeleportationManager teleportationManager;
 
     @Override

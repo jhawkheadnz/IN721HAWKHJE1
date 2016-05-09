@@ -7,6 +7,9 @@ import android.graphics.Bitmap;
  */
 public class FlickrInfo {
 
+    // for logcat
+    private static final String FLICKR_INFO = "FLICKR_INFO";
+
     // JSON Properties
     private String id;
     private String owner;

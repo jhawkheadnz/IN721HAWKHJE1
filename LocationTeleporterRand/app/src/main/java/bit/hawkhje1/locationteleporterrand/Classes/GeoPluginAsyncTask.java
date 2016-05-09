@@ -17,6 +17,9 @@ import bit.hawkhje1.locationteleporterrand.Interfaces.AsyncCallback;
  */
 public class GeoPluginAsyncTask extends AsyncTask<Void, Void, GeoPluginInfo> {
 
+    // for log cat
+    private static final String GEOPLUGIN_ASYNCTASK_INFO = "GEOPLUGIN_ASYNCTASK_INFO";
+
     // reference context for progress dialog
     private Context context;
 
