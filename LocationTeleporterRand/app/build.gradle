@@ -5,6 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
+        //multiDexEnabled true
         applicationId "bit.hawkhje1.locationteleporterrand"
         minSdkVersion 15
         targetSdkVersion 23

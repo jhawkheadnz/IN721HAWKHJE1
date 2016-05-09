@@ -1,36 +1,31 @@
 package bit.hawkhje1.locationteleporterrand;
 
-import android.os.AsyncTask;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import bit.hawkhje1.locationteleporterrand.Classes.FlickrAsyncTask;
+import bit.hawkhje1.locationteleporterrand.Classes.FlickrInfo;
+import bit.hawkhje1.locationteleporterrand.Classes.GeoPluginInfo;
+import bit.hawkhje1.locationteleporterrand.Interfaces.AsyncCallback;
+import bit.hawkhje1.locationteleporterrand.Interfaces.TeleportationListener;
+import bit.hawkhje1.locationteleporterrand.Managers.TeleportationManager;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static double MIN_LONGITUDE = -180;
-    private static double MAX_LONGITUDE = 180;
-    private static double MIN_LATITUDE = -90;
-    private static double MAX_LATITUDE = 90;
 
     private TextView tvLatitude;
     private TextView tvLongitude;
     private TextView tvLocation;
     private ImageView imgLocation;
-    private Button btnTeleport;
+    private TextView tvImageNotFound;
+
+    private TeleportationManager teleportationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,171 +36,101 @@ public class MainActivity extends AppCompatActivity {
         tvLatitude = (TextView)findViewById(R.id.tvLatitudeValue);
         tvLongitude = (TextView)findViewById(R.id.tvLongitudeValue);
         tvLocation = (TextView)findViewById(R.id.tvLocation);
+        tvImageNotFound = (TextView)findViewById(R.id.tvImageNotFound);
 
         // setup image view
         imgLocation = (ImageView)findViewById(R.id.imgLocation);
 
         // setup button
-        btnTeleport = (Button)findViewById(R.id.btnGenerateLocation);
+        Button btnTeleport = (Button) findViewById(R.id.btnGenerateLocation);
 
         // attach button click handler
         BtnClickTeleportHandler btnClickTeleportHandler = new BtnClickTeleportHandler();
         btnTeleport.setOnClickListener(btnClickTeleportHandler);
 
+        // create teleportation manager
+        teleportationManager = new TeleportationManager(MainActivity.this);
+
+        OnTeleportHandler onTeleportHandler = new OnTeleportHandler();
+        teleportationManager.setTeleportationListener(onTeleportHandler);
     }
 
-    // teleportation button
+    // when teleportation has occurred
+    public class OnTeleportHandler implements TeleportationListener {
+
+        @Override
+        public void onTeleport(Object... data) {
+
+            // if data has come from the teleportation manager
+            if(data[0] != null) {
+
+                // convert data into a geoplugin info object
+                GeoPluginInfo info = (GeoPluginInfo) data[0];
+
+                // get the longitude and latitude locations from the info object
+                String latitude = String.format("%s", info.getLatitude());
+                String longitude = String.format("%s", info.getLongitude());
+
+                // display the longitude and latitude values
+                tvLatitude.setText(latitude);
+                tvLongitude.setText(longitude);
+
+                // display the place and country code
+                tvLocation.setText(String.format("%s, %s", info.getPlace(), info.getCountryCode()));
+
+                // check flickr and see if there are any images available for the location
+                FlickrAsyncTask flickrAsyncTask = new FlickrAsyncTask(MainActivity.this);
+
+                // callback object
+                OnFlickrUpdate onFlickrUpdate = new OnFlickrUpdate();
+
+                // set callback listener
+                flickrAsyncTask.setCallbackListener(onFlickrUpdate);
+
+                // execute query passing in latitude and longitude values
+                flickrAsyncTask.execute(latitude, longitude);
+            }
+
+        }
+
+    }
+
+    // when flickrAsyncTask has grabbed content from Flickr
+    public class OnFlickrUpdate implements AsyncCallback<List<FlickrInfo>>{
+
+        @Override
+        public void run(List<FlickrInfo> result) {
+
+            // if a result has been found for flickr
+            if(result.size() > 0) {
+
+                // display the image
+                imgLocation.setImageBitmap(result.get(0).getImage());
+
+            }else{
+
+                // if an image has not been found for the location, display image_not_found image
+                Drawable image = getResources().getDrawable(R.drawable.img_not_found);
+                imgLocation.setImageDrawable(image);
+
+                // set the "Image Not Found" textview to visible
+                tvImageNotFound.setVisibility(View.VISIBLE);
+            }
+
+        }
+    }
+
+    // teleportation button click handler
     public class BtnClickTeleportHandler implements View.OnClickListener {
         @Override
         public void onClick(View v) {
 
-            GeoPluginAsyncTask geoPlugin = new GeoPluginAsyncTask();
-            geoPlugin.execute();
+            // if the image not found textview is visibile hide it
+            if(tvImageNotFound.getVisibility() == View.VISIBLE)
+                tvImageNotFound.setVisibility(View.INVISIBLE);
 
-            try {
-                // get the geoplugin information
-                GeoPluginInfo geoPluginInfo = geoPlugin.get();
-
-                // get the coordinates from geoplugin
-                Coordinates teleportationLocation = geoPluginInfo.getOriginalCoordinates();
-
-                // get individual coordinates from geoplugin
-                double longitude = teleportationLocation.getLongitude();
-                double latitude = teleportationLocation.getLatitude();
-
-                // parse the longitude and latitude values
-                String longitudeText = Double.toString(longitude);
-                String latitudeText = Double.toString(latitude);
-
-                // output geoplugin data to screen
-                tvLongitude.setText(longitudeText);
-                tvLatitude.setText(latitudeText);
-
-                // output location to screen
-                tvLocation.setText(String.format("Closest Location: %s, %s", geoPluginInfo.getPlace(), geoPluginInfo.getCountryCode()));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }
-
-    // get the location coordinates
-    public Coordinates getLocation(){
-
-        // generate a random longitude location
-        double longitude = Globals.RandomDouble(Globals.MIN_LONGITUDE, Globals.MAX_LONGITUDE);
-
-        // generate a random latitude location
-        double latitude = Globals.RandomDouble(Globals.MIN_LATITUDE, Globals.MAX_LATITUDE);
-
-        // return coordinates
-        return new Coordinates(longitude, latitude);
-
-    }
-
-    // async task for GeoPlugin
-    public class GeoPluginAsyncTask extends AsyncTask<String, Integer, GeoPluginInfo>
-    {
-        private static final String GEOPLUGIN_ASYNCTASK = "GEOPLUGIN_ASYNC";
-
-        @Override
-        protected GeoPluginInfo doInBackground(String... params) {
-
-            GeoPluginInfo geoPluginInfo = null;
-
-            try {
-
-                String geoPluginContent;
-                Coordinates randCoordinates;
-
-                int geoPluginIterations = 0;
-
-                do {
-
-                    // generate random coordinates
-                    randCoordinates = getLocation();
-
-                    // output geoplugin async task to log
-                    Log.d(GEOPLUGIN_ASYNCTASK, "Checking Coordinates " + randCoordinates.toString());
-
-                    // format the URL
-                    String formattedURL = String.format(Globals.GEOPLUGIN_URL, randCoordinates.getLatitude(), randCoordinates.getLongitude());
-
-                    // create URL
-                    URL geoPluginURL = new URL(formattedURL);
-
-                    // create an HTTP URL Connection
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) geoPluginURL.openConnection();
-
-                    // create an input stream
-                    InputStream inputStream = httpURLConnection.getInputStream();
-
-                    // create input stream reader
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
-                    // create buffered reader
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                    // create a string builder to get content from geoplugin
-                    StringBuilder content = new StringBuilder();
-
-                    // create empty string
-                    String currentLine;
-
-                    // loop through each line that's returned
-                    while ((currentLine = bufferedReader.readLine()) != null) {
-                        content.append(currentLine);
-                    }
-
-                    geoPluginContent = content.toString();
-                    Log.d(GEOPLUGIN_ASYNCTASK, "Content Received From GeoPlugin: " + geoPluginContent);
-
-                    geoPluginIterations++;
-
-                    if(geoPluginIterations == Globals.MAX_GEOPLUGIN_ITERATIONS) {
-                        throw new GeoPluginMaxIterationsException("Application Failed to Find a Location within the Specific Iterations");
-                    }
-
-                }while(geoPluginContent.equals("[[]]"));
-
-                // Create JSONObject from GeoPlugin API
-                JSONObject geoPluginJSON = new JSONObject(geoPluginContent);
-                Log.d(GEOPLUGIN_ASYNCTASK, "JSON Object Output" + geoPluginJSON.toString());
-
-                // =========================== Get Content from JSON ===============================
-                String place = geoPluginJSON.getString("geoplugin_place");
-                String countryCode = geoPluginJSON.getString("geoplugin_countryCode");
-                String region = geoPluginJSON.getString("geoplugin_region");
-                String regionAbbreviated = geoPluginJSON.getString("geoplugin_regionAbbreviated");
-
-                double longitude = geoPluginJSON.getDouble("geoplugin_longitude");
-                double latitude = geoPluginJSON.getDouble("geoplugin_latitude");
-                Coordinates coordinates = new Coordinates(longitude, latitude);
-
-                double distanceMiles = geoPluginJSON.getDouble("geoplugin_distanceMiles");
-                double distanceKilometers = geoPluginJSON.getDouble("geoplugin_distanceKilometers");
-                // =================================================================================
-
-                // Store retrieved content into geoplugin info class
-                geoPluginInfo = new GeoPluginInfo(
-                        randCoordinates, coordinates, place,
-                        countryCode, region, regionAbbreviated,
-                        distanceMiles, distanceKilometers);
-
-            } catch (java.io.IOException | JSONException | GeoPluginMaxIterationsException e) {
-                e.printStackTrace();
-            }
-
-            return geoPluginInfo;
-        }
-
-        @Override
-        protected void onPostExecute(GeoPluginInfo geoPluginInfo) {
-
-            super.onPostExecute(geoPluginInfo);
+            // teleport the user to a random location
+            teleportationManager.Teleport();
         }
     }
 
