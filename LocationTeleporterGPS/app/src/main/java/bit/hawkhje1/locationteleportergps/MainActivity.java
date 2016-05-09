@@ -1,9 +1,17 @@
 package bit.hawkhje1.locationteleportergps;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,9 +22,12 @@ import java.util.List;
 import bit.hawkhje1.locationteleportergps.Classes.FlickrAsyncTask;
 import bit.hawkhje1.locationteleportergps.Classes.FlickrInfo;
 import bit.hawkhje1.locationteleportergps.Classes.GeoPluginInfo;
+import bit.hawkhje1.locationteleportergps.Classes.Globals;
 import bit.hawkhje1.locationteleportergps.Interfaces.AsyncCallback;
 import bit.hawkhje1.locationteleportergps.Interfaces.TeleportationListener;
 import bit.hawkhje1.locationteleportergps.Managers.TeleportationManager;
+
+import static bit.hawkhje1.locationteleportergps.Classes.Globals.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,12 +42,37 @@ public class MainActivity extends AppCompatActivity {
 
     // create teleportation manager
     private TeleportationManager teleportationManager;
-    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // setup location manager
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // set default criteria
+        Criteria criteria = new Criteria();
+
+        // get provider
+        String providerName = locationManager.getBestProvider(criteria, false);
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        LocationHandler locationHandler = new LocationHandler();
+
+        locationManager.requestLocationUpdates(providerName, Globals.LocationManager.MIN_UPDATE_TIME,
+                Globals.LocationManager.MIN_DISTANCE, locationHandler);
 
         // setup textviews
         tvLatitude = (TextView)findViewById(R.id.tvLatitudeValue);
@@ -47,18 +83,47 @@ public class MainActivity extends AppCompatActivity {
         // setup image view
         imgLocation = (ImageView)findViewById(R.id.imgLocation);
 
-        // setup button
-        Button btnTeleport = (Button) findViewById(R.id.btnGenerateLocation);
-
-        // attach button click handler
-        BtnClickTeleportHandler btnClickTeleportHandler = new BtnClickTeleportHandler();
-        btnTeleport.setOnClickListener(btnClickTeleportHandler);
-
         // create teleportation manager
         teleportationManager = new TeleportationManager(MainActivity.this);
 
         OnTeleportHandler onTeleportHandler = new OnTeleportHandler();
         teleportationManager.setTeleportationListener(onTeleportHandler);
+    }
+
+    public class LocationHandler implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location location) {
+
+            Log.d(MAIN_ACTIVITY_INFO, "Updating Location >>>>> " + location.toString());
+
+            String longitude = Double.toString(location.getLongitude());
+            String latitude = Double.toString(location.getLatitude());
+
+            // if the image not found textview is visibile hide it
+            if(tvImageNotFound.getVisibility() == View.VISIBLE)
+                tvImageNotFound.setVisibility(View.INVISIBLE);
+
+            tvLongitude.setText(longitude);
+            tvLatitude.setText(latitude);
+
+            teleportationManager.Teleport(location.getLatitude(), location.getLongitude());
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.d(MAIN_ACTIVITY_INFO, "onStatusChanged(): " + provider + " " + status + " " + extras.toString());
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            Log.d(MAIN_ACTIVITY_INFO, "onProviderEnabled(): " + provider);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.d(MAIN_ACTIVITY_INFO, "onProviderDisabled(): " + provider);
+        }
     }
 
     // when teleportation has occurred
@@ -78,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 String longitude = String.format("%s", info.getLongitude());
 
                 // display the longitude and latitude values
-                tvLatitude.setText(latitude);
-                tvLongitude.setText(longitude);
+                //tvLatitude.setText(latitude);
+                //tvLongitude.setText(longitude);
 
                 // display the place and country code
                 tvLocation.setText(String.format("%s, %s", info.getPlace(), info.getCountryCode()));
@@ -123,20 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 tvImageNotFound.setVisibility(View.VISIBLE);
             }
 
-        }
-    }
-
-    // teleportation button click handler
-    public class BtnClickTeleportHandler implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-
-            // if the image not found textview is visibile hide it
-            if(tvImageNotFound.getVisibility() == View.VISIBLE)
-                tvImageNotFound.setVisibility(View.INVISIBLE);
-
-            // teleport the user to a random location
-            teleportationManager.Teleport();
         }
     }
 

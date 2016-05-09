@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LocationTeleporterRand</string>
+    <string name="app_name">GPS Locator</string>
     <string name="longitude_title">Longitude:</string>
     <string name="default_longitude_value"><![CDATA[<location not set>]]></string>
     <string name="latitude_title">Latitude:</string>

@@ -62,11 +62,11 @@ public class GeoPluginAsyncTask extends AsyncTask<Double, Void, GeoPluginInfo> {
         // create an empty string
         String geoPluginContent = "";
 
-        // randomly generate longitude value
-        double longitude = params[0];
-
         // randomly generate latitude value
-        double latitude = params[1];
+        double latitude = params[0];
+
+        // randomly generate longitude value
+        double longitude = params[1];
 
         // construct url with randomly generated coordinates
         String geoPluginURL = String.format(Globals.GeoPlugin.GEOPLUGIN_URL, latitude, longitude);

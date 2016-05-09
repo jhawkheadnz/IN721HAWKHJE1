@@ -1,6 +1,7 @@
 package bit.hawkhje1.locationteleportergps.Managers;
 
 import android.content.Context;
+import android.util.Log;
 
 import bit.hawkhje1.locationteleportergps.Classes.GeoPluginAsyncTask;
 import bit.hawkhje1.locationteleportergps.Classes.GeoPluginInfo;
@@ -13,7 +14,7 @@ import bit.hawkhje1.locationteleportergps.Interfaces.TeleportationListener;
 public class TeleportationManager {
 
     // for log cat
-    private static final String TELEPORTATION_MANAGER_INFO = "TELEPORTATION_MANAGER_INFO";
+    private static final String TELEPORTATION_MGR_INFO = "TELEPORTATION_MGR_INFO";
 
     // reference to context
     private Context context;
@@ -37,7 +38,9 @@ public class TeleportationManager {
     }
 
     // execute teleportation
-    public void Teleport(){
+    public void Teleport(double latitude, double longitude){
+
+        Log.d(TELEPORTATION_MGR_INFO, "Teleporting");
 
         // create geoplugin async task
         GeoPluginAsyncTask geoPluginAsyncTask = new GeoPluginAsyncTask(context);
@@ -49,7 +52,7 @@ public class TeleportationManager {
         geoPluginAsyncTask.setAsyncCallbackListener(geoPluginCallbackHandler);
 
         // execute async task
-        geoPluginAsyncTask.execute();
+        geoPluginAsyncTask.execute(latitude, longitude);
 
     }
 

@@ -14,6 +14,16 @@ public class Globals {
     public static double MAX_LATITUDE = 90;
 
     /**
+     * Location Manager Constants
+     */
+    public static class LocationManager {
+        public static int REQUEST_CODE = 100;
+
+        public static int MIN_UPDATE_TIME = 2000; // 5000
+        public static int MIN_DISTANCE = 10; //10
+    }
+
+    /**
      * GeoPlugin Constants
      */
     public static class GeoPlugin {
@@ -71,7 +81,7 @@ public class Globals {
         /**
          * Flickr Search Radius
          */
-        public static final double DEFAULT_FLICKR_RADIUS = 10;
+        public static final double DEFAULT_FLICKR_RADIUS = 5;
 
         /**
          * Flickr Progress Dialog Title
