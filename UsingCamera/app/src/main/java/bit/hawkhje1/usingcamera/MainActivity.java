@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     private File photoFile;
 
-    private Button btnTakePhoto;
     private ImageView imgPicture1;
     private ImageView imgPicture2;
     private ImageView imgPicture3;
