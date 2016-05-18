@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/item_color_red"
+        android:title="Red"
+        android:icon="@drawable/red_paint_bucket"
+        app:showAsAction="ifRoom|withText"></item>
+
+    <item android:id="@+id/item_color_green"
+        android:title="Green"
+        android:icon="@drawable/green_paint_bucket"
+        app:showAsAction="ifRoom|withText"></item>
+
+    <item android:id="@+id/item_color_blue"
+        android:title="Blue"
+        android:icon="@drawable/blue_paint_bucket"
+        app:showAsAction="ifRoom|withText"></item>
+
+</menu>
