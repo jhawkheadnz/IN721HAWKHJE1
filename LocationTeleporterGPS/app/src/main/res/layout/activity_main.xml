@@ -85,16 +85,41 @@
             android:gravity="center|center_vertical|center_horizontal"
             android:visibility="invisible" />
 
-        <ImageView
-            android:layout_width="match_parent"
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imgLocation"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/img_description"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp" />
+            android:id="@+id/horizontalScrollView" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <ImageSwitcher
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageSwitcher" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgLocation"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/img_description"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgNextImage"
+                android:contentDescription="" />
+        </ImageSwitcher>
 
     </LinearLayout>
 </LinearLayout>

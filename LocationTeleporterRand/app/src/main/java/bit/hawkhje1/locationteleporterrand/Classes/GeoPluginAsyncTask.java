@@ -3,6 +3,7 @@ package bit.hawkhje1.locationteleporterrand.Classes;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -18,7 +19,7 @@ import bit.hawkhje1.locationteleporterrand.Interfaces.AsyncCallback;
 public class GeoPluginAsyncTask extends AsyncTask<Void, Void, GeoPluginInfo> {
 
     // for log cat
-    private static final String GEOPLUGIN_ASYNCTASK_INFO = "GEOPLUGIN_ASYNCTASK_INFO";
+    private static final String GEOPLUGIN_ASYNCTASK_INFO = "GEOPLUGIN_ASYNC_INFO";
 
     // reference context for progress dialog
     private Context context;
@@ -82,6 +83,9 @@ public class GeoPluginAsyncTask extends AsyncTask<Void, Void, GeoPluginInfo> {
             // construct url with randomly generated coordinates
             String geoPluginURL = String.format(Globals.GeoPlugin.GEOPLUGIN_URL, latitude, longitude);
 
+            // output geoplugin url to log
+            Log.d(GEOPLUGIN_ASYNCTASK_INFO, "GeoPlugin URL: " + geoPluginURL);
+
             // check and see if geoplugin content exists for random coordinates
             try {
 
@@ -116,6 +120,7 @@ public class GeoPluginAsyncTask extends AsyncTask<Void, Void, GeoPluginInfo> {
 
                 // if exception is raised print out stack trace
                 ex.printStackTrace();
+
             }
 
             // continue to loop until geoplugin finds a valid location

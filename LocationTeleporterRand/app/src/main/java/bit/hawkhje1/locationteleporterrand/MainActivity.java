@@ -8,6 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.List;
 
 import bit.hawkhje1.locationteleporterrand.Classes.FlickrAsyncTask;
@@ -28,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgLocation;
     private TextView tvImageNotFound;
 
+    private SupportMapFragment mapFragment;
+    private GoogleMap googleMap;
+    private LatLng latLng;
+
     // create teleportation manager
     private TeleportationManager teleportationManager;
 
@@ -41,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         tvLongitude = (TextView)findViewById(R.id.tvLongitudeValue);
         tvLocation = (TextView)findViewById(R.id.tvLocation);
         tvImageNotFound = (TextView)findViewById(R.id.tvImageNotFound);
+
+        //setup map fragment
+        mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
 
         // setup image view
         imgLocation = (ImageView)findViewById(R.id.imgLocation);
@@ -83,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 tvLocation.setText(String.format("%s, %s", info.getPlace(), info.getCountryCode()));
 
                 // check flickr and see if there are any images available for the location
-                FlickrAsyncTask flickrAsyncTask = new FlickrAsyncTask(MainActivity.this);
+                /*FlickrAsyncTask flickrAsyncTask = new FlickrAsyncTask(MainActivity.this);
 
                 // callback object
                 OnFlickrUpdate onFlickrUpdate = new OnFlickrUpdate();
@@ -92,7 +104,14 @@ public class MainActivity extends AppCompatActivity {
                 flickrAsyncTask.setCallbackListener(onFlickrUpdate);
 
                 // execute query passing in latitude and longitude values
-                flickrAsyncTask.execute(latitude, longitude);
+                flickrAsyncTask.execute(latitude, longitude);*/
+
+                LatLng latLng = new LatLng(info.getLatitude(), info.getLongitude());
+
+                MapCallback mapCallback = new MapCallback(googleMap, latLng, info.getPlace());
+
+                mapFragment.getMapAsync(mapCallback);
+
             }
 
         }

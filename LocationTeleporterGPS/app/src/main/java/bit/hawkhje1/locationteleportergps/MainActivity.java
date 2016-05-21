@@ -1,8 +1,10 @@
 package bit.hawkhje1.locationteleportergps;
 
 import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -13,31 +15,37 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+
+import java.util.ArrayList;
 import java.util.List;
 
 import bit.hawkhje1.locationteleportergps.Classes.FlickrAsyncTask;
 import bit.hawkhje1.locationteleportergps.Classes.FlickrInfo;
 import bit.hawkhje1.locationteleportergps.Classes.GeoPluginInfo;
+import bit.hawkhje1.locationteleportergps.Classes.GetImageAsyncTask;
 import bit.hawkhje1.locationteleportergps.Classes.Globals;
 import bit.hawkhje1.locationteleportergps.Interfaces.AsyncCallback;
 import bit.hawkhje1.locationteleportergps.Interfaces.TeleportationListener;
 import bit.hawkhje1.locationteleportergps.Managers.TeleportationManager;
 
-import static bit.hawkhje1.locationteleportergps.Classes.Globals.*;
-
 public class MainActivity extends AppCompatActivity {
+
+    private DownloadManager downloadManager;
 
     // for logcat
     private static final String MAIN_ACTIVITY_INFO = "MAIN_ACTIVITY_INFO";
+
+    private List<FlickrInfo> flickrImages;
 
     private TextView tvLatitude;
     private TextView tvLongitude;
     private TextView tvLocation;
     private ImageView imgLocation;
+    private ImageView imgNextImage;
     private TextView tvImageNotFound;
 
     // create teleportation manager
@@ -45,8 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        flickrImages = new ArrayList<>();
 
         // setup location manager
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -56,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         // get provider
         String providerName = locationManager.getBestProvider(criteria, false);
-
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -82,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         // setup image view
         imgLocation = (ImageView)findViewById(R.id.imgLocation);
+        imgNextImage = (ImageView)findViewById(R.id.imgNextImage);
 
         // create teleportation manager
         teleportationManager = new TeleportationManager(MainActivity.this);
@@ -95,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onLocationChanged(Location location) {
 
-            Log.d(MAIN_ACTIVITY_INFO, "Updating Location >>>>> " + location.toString());
+            Log.d(MAIN_ACTIVITY_INFO, "Updating Location: " + location.toString());
 
             String longitude = Double.toString(location.getLongitude());
             String latitude = Double.toString(location.getLatitude());
 
-            // if the image not found textview is visibile hide it
+            // if the image not found textview is visible hide it
             if(tvImageNotFound.getVisibility() == View.VISIBLE)
                 tvImageNotFound.setVisibility(View.INVISIBLE);
 
@@ -143,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
                 String longitude = String.format("%s", info.getLongitude());
 
                 // display the longitude and latitude values
-                //tvLatitude.setText(latitude);
-                //tvLongitude.setText(longitude);
+                // tvLatitude.setText(latitude);
+                // tvLongitude.setText(longitude);
 
                 // display the place and country code
                 tvLocation.setText(String.format("%s, %s", info.getPlace(), info.getCountryCode()));
@@ -166,22 +177,57 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*public Bitmap downloadImage(String image_url){
+
+        /*
+        // create image downloader async task
+        GetImageAsyncTask getImageAsyncTask = new GetImageAsyncTask(MainActivity.this);
+
+        // create handler to grab the image
+        ImageCallbackHandler imageCallbackHandler = new ImageCallbackHandler();
+
+        // set the handler
+        getImageAsyncTask.setCallbackListener(imageCallbackHandler);
+
+        // setup a loading title for the download async task progress dialog
+        String flickrImageLoadingTitle = Globals.Flickr.FLICKR_LOADING_IMAGE_TITLE;
+
+        // get the flickr image url
+        // String flickrImageURL = result.get(0).getImageURL();
+
+        // execute image downloader
+        getImageAsyncTask.execute(image_url, flickrImageLoadingTitle);
+
+        return imageCallbackHandler.getImage();
+
+    }*/
+
     // when flickrAsyncTask has grabbed content from Flickr
     public class OnFlickrUpdate implements AsyncCallback<List<FlickrInfo>>{
 
         @Override
-        public void run(List<FlickrInfo> result) {
+        public void run(List<FlickrInfo> results) {
+
+            for(int i = 0; i < results.size(); i++)
+                flickrImages.add(results.get(i));
+
+            // check if content is actually being added to array
+            Log.d(MAIN_ACTIVITY_INFO, flickrImages.toString());
 
             // if a result has been found for flickr
-            if(result.size() > 0) {
+            if(results.size() > 0) {
 
-                // display the image
-                imgLocation.setImageBitmap(result.get(0).getImage());
+                results.get(0).loadImageForImageView(MainActivity.this, imgLocation);
+
+                if(results.size() > 1)
+                    results.get(1).loadImageForImageView(MainActivity.this, imgNextImage);
 
             }else{
 
                 // if an image has not been found for the location, display image_not_found image
                 Drawable image = getResources().getDrawable(R.drawable.image_unavailable);
+
+                // display image not found image
                 imgLocation.setImageDrawable(image);
 
                 // set the "Image Not Found" textview to visible
@@ -191,4 +237,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+//    // when flickr asks for an image
+//    public class ImageCallbackHandler implements AsyncCallback<Bitmap> {
+//
+//        private Bitmap image;
+//
+//        @Override
+//        public void run(Bitmap result) {
+//
+//            // display the image
+//            //imgLocation.setImageBitmap(result);
+//
+//            this.image = result;
+//
+//        }
+//
+//        public Bitmap getImage(){ return image; }
+//    }
 }

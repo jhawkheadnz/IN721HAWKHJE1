@@ -183,14 +183,18 @@ public class FlickrAsyncTask extends AsyncTask<String, Void, List<FlickrInfo>> {
                 String owner = currentPhoto.getString("owner");
                 String secret = currentPhoto.getString("secret");
                 String server = currentPhoto.getString("server");
-                int farm = currentPhoto.getInt("farm");
                 String title = currentPhoto.getString("title");
+
+                int farm = currentPhoto.getInt("farm");
+
                 boolean isPublic = (currentPhoto.getInt("ispublic") == 1);
                 boolean isFriend = (currentPhoto.getInt("isfriend") == 1);
                 boolean isFamily = (currentPhoto.getInt("isfamily") == 1);
 
-                // create intance of flickrInfo for current JSONObject
+                // create instance of flickrInfo for current JSONObject
                 FlickrInfo flickrInfo = new FlickrInfo(id, owner, secret, server, farm, title, isPublic, isFriend, isFamily);
+
+                /* <<=====================================
 
                 // get the flickr image URL
                 String imageURL = flickrInfo.constructImageURL();
@@ -203,6 +207,8 @@ public class FlickrAsyncTask extends AsyncTask<String, Void, List<FlickrInfo>> {
 
                 // add the image to the flickrInfo object
                 flickrInfo.setImage(image);
+
+                ==================================>> */
 
                 // add flickrInfo to flickrInfo list
                 flickrInfoList.add(flickrInfo);

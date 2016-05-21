@@ -31,6 +31,8 @@ public class Globals {
         public static String GEOPLUGIN_URL = "http://geoplugin.net/extras/location.gp?lat=%s&long=%s&format=json";
         public static String GEOPLUGIN_NOJSONOUTPUT = "[[]]";
 
+        public static String PROGRESS_DIALOG_TITLE = "Retrieving Data From GeoPlugin...";
+
         public static double randomDouble(double min, double max) {
             Random rand = new Random();
             return rand.nextDouble() * (max - min) + min;
@@ -56,7 +58,7 @@ public class Globals {
         /**
          * Default results per page
          */
-        public static final int RESULTS_PER_PAGE = 1;
+        public static final int RESULTS_PER_PAGE = 3;
 
         /**
          * Default page
@@ -86,6 +88,15 @@ public class Globals {
         /**
          * Flickr Progress Dialog Title
          */
-        public static final String FLICKR_PROGRESS_DIALOG_TITLE = "Finding Flickr Image...";
+        public static final String FLICKR_PROGRESS_DIALOG_TITLE = "Retrieving Info From Flickr...";
+
+        public static final String FLICKR_LOADING_IMAGE_TITLE = "Loading Flickr Image...";
+    }
+
+    public static class ImageAsyncTask {
+
+        public static final String DEFAULT_PROGRESS_TITLE = "Loading Image...";
+        public static final int SET_TITLE_PARAMETER = 2;
+
     }
 }

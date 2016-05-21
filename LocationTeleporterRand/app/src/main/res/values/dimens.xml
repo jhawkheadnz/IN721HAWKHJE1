@@ -5,4 +5,5 @@
     <dimen name="longitude_title_padding_right">10sp</dimen>
     <dimen name="coordinate_titles_width">90sp</dimen>
     <dimen name="top_padding5">5sp</dimen>
+    <dimen name="google_maps_height">500sp</dimen>
 </resources>

@@ -43,7 +43,7 @@ public class GeoPluginAsyncTask extends AsyncTask<Double, Void, GeoPluginInfo> {
         this.progressDialog = new ProgressDialog(this.context);
 
         // set title for progress dialog
-        this.progressDialog.setTitle("Teleporting....");
+        this.progressDialog.setTitle(Globals.GeoPlugin.PROGRESS_DIALOG_TITLE);
     }
 
     /**
@@ -115,7 +115,6 @@ public class GeoPluginAsyncTask extends AsyncTask<Double, Void, GeoPluginInfo> {
         return GeoPluginInfo.fromJSON(geoPluginContent, latitude, longitude);
 
     }
-
 
     @Override
     protected void onPostExecute(GeoPluginInfo geoPluginInfo) {

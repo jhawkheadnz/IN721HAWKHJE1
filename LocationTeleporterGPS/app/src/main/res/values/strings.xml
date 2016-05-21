@@ -7,5 +7,6 @@
     <string name="default_location"><![CDATA[<< location not set >>]]></string>
     <string name="btn_generate_location">TELEPORT!</string>
     <string name="default_no_image">No Image Found</string>
+    <string name="api_key">AIzaSyCV2bFnNJLoiGSmAG_WgdoLQLlW3McF8g0</string>
     <string name="img_description" />
 </resources>

@@ -1,6 +1,20 @@
 package bit.hawkhje1.locationteleportergps.Classes;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ImageView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import bit.hawkhje1.locationteleportergps.Interfaces.AsyncCallback;
+import bit.hawkhje1.locationteleportergps.MainActivity;
 
 /**
  * FlickrInfo class for holding flickr info
@@ -9,6 +23,23 @@ public class FlickrInfo {
 
     // for logcat
     private static final String FLICKR_INFO = "FLICKR_INFO";
+
+    @Override
+    public String toString() {
+        return "FlickrInfo{" +
+                "id='" + id + '\'' +
+                ", owner='" + owner + '\'' +
+                ", secret='" + secret + '\'' +
+                ", server='" + server + '\'' +
+                ", farm=" + farm +
+                ", title='" + title + '\'' +
+                ", isPublic=" + isPublic +
+                ", isFriend=" + isFriend +
+                ", isFamily=" + isFamily +
+                ", image=" + image +
+                ", url=" + getImageURL() +
+                '}';
+    }
 
     // JSON Properties
     private String id;
@@ -39,6 +70,21 @@ public class FlickrInfo {
         this.isFamily = isFamily;
     }
 
+    public void loadImageForImageView(Context context, final ImageView imageView){
+
+        GetImageAsyncTask geoImageAsyncTask = new GetImageAsyncTask(context);
+
+        geoImageAsyncTask.setCallbackListener(new AsyncCallback<Bitmap>() {
+            @Override
+            public void run(Bitmap result) {
+                imageView.setImageBitmap(result);
+            }
+        });
+
+        geoImageAsyncTask.execute(getImageURL(), "TEST");
+    }
+
+
     /**
      * Returns the Flickr Image
      * @return Flickr Image
@@ -59,10 +105,9 @@ public class FlickrInfo {
      * Constructs and returns the url for the image
      * @return URL for Image
      */
-    public String constructImageURL(){
-
-        return String.format(Globals.Flickr.BASE_IMAGE_URL, farm, server, id, secret, Globals.Flickr.DEFAULT_IMAGE_SIZE);
-
+    public String getImageURL(){
+        return String.format(Globals.Flickr.BASE_IMAGE_URL, farm, server,
+                id, secret, Globals.Flickr.DEFAULT_IMAGE_SIZE);
     }
 
     /**

@@ -195,6 +195,9 @@ public class FlickrAsyncTask extends AsyncTask<String, Void, List<FlickrInfo>> {
                 // get the flickr image URL
                 String imageURL = flickrInfo.constructImageURL();
 
+                // output image url to log
+                Log.d(FLICKR_ASYNCTASK_INFO, "Image URL: " + imageURL);
+
                 // get the image from the imageURL
                 Bitmap image = getImageFromURL(imageURL);
 
