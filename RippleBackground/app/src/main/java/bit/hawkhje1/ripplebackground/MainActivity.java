@@ -16,22 +16,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // get ripple background from View
         rippleBackground = (RippleBackground)findViewById(R.id.content);
 
+        // get image from view
         ImageView image = (ImageView)findViewById(R.id.centerImage);
 
+        // create ripple background handler
         RippleBtnOnClickHandler rippleBtnOnClickHandler = new RippleBtnOnClickHandler();
 
+        // attach ripple button handler to image
         image.setOnClickListener(rippleBtnOnClickHandler);
     }
 
+    // handle click for ripple background
     private class RippleBtnOnClickHandler implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
 
+            // get the ripple background state
             boolean animationRunning = rippleBackground.isRippleAnimationRunning();
 
+            // if the animation isn't running, start the animation, else stop
             if(!animationRunning){
                 rippleBackground.startRippleAnimation();
             }else{
