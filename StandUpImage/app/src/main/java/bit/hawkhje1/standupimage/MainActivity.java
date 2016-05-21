@@ -11,7 +11,6 @@ import com.daimajia.androidanimations.library.attention.StandUpAnimator;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView standUpImage;
-
     private Button btnStandUp;
 
     @Override
@@ -19,20 +18,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // get view items
         standUpImage = (ImageView)findViewById(R.id.standUpImage);
         btnStandUp = (Button)findViewById(R.id.btnStandUp);
 
+        // setup button handler for stand up button
         BtnStandUpHandler btnStandUpHandler = new BtnStandUpHandler();
         btnStandUp.setOnClickListener(btnStandUpHandler);
     }
 
+    // create button handler for standing up
     private class BtnStandUpHandler implements View.OnClickListener {
-
-
+        
         @Override
         public void onClick(View v) {
+
+            // create stand up animator
             StandUpAnimator standUpAnimator = new StandUpAnimator();
+
+            // prepare the view item that is going to stand up
             standUpAnimator.prepare(standUpImage);
+
+            // begin stand up animation
             standUpAnimator.start();
         }
     }
